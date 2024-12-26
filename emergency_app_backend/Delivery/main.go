@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// MongoDB connection setup
-	clientOptions := options.Client().ApplyURI("mongodb+srv://kenean:Godislove33.@cluster0.fek5tj1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+	clientOptions := options.Client().ApplyURI("mongodb+srv://<><>@cluster0.fek5tj1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 	client, err := mongo.Connect(nil, clientOptions)
 	if err != nil {
 		log.Fatal(err)
