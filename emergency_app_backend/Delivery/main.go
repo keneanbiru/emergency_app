@@ -4,6 +4,7 @@ import (
 	routers "emergency_app_backend/Delivery/routers"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -12,7 +13,7 @@ import (
 
 func main() {
 	// MongoDB connection setup
-	clientOptions := options.Client().ApplyURI("mongodb+srv://<><>@cluster0.fek5tj1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+	clientOptions := options.Client().ApplyURI("mongodb+srv://kenean:Godislove33.@cluster0.fek5tj1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 	client, err := mongo.Connect(nil, clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -29,6 +30,13 @@ func main() {
 
 	// Initialize Gin router
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+        AllowAllOrigins: true,
+        AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowHeaders:    []string{"Origin", "Content-Type", "Authorization"},
+    }))
+
 
 	// Set up routes
 	routers.SetupRoutes(router, db)
