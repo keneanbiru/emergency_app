@@ -7,9 +7,9 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	// "net/http"
 )
 
 func main() {
@@ -31,6 +31,18 @@ func main() {
 
 	// Initialize Gin router
 	router := gin.Default()
+
+	// Apply CORS middleware
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // Change "*" to specific domains for better security
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+	router.Use(func(c *gin.Context) {
+		corsHandler.HandlerFunc(c.Writer, c.Request)
+		c.Next()
+	})
 
 	// Set up routes
 	routers.SetupRoutes(router, db)
