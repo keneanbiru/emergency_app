@@ -103,8 +103,8 @@ func (repo *EmergencyContactRepo) DeleteEmergencyContact(ctx context.Context, id
 	return nil
 }
 
-func (repo *EmergencyContactRepo) GetContactsByUserID(ctx context.Context, userID string) ([]Domain.EmergencyContact, error) {
-	cursor, err := repo.collection.Find(ctx, bson.M{"user_id": userID})
+func (repo *EmergencyContactRepo) GetAllContacts(ctx context.Context) ([]Domain.EmergencyContact, error) {
+	cursor, err := repo.collection.Find(ctx, bson.M{}) // Empty filter to fetch all contacts
 	if err != nil {
 		return nil, err
 	}

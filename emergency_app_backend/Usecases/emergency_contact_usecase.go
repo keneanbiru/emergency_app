@@ -36,6 +36,6 @@ func (u *EmergencyContactUsecase) DeleteContact(ctx context.Context, id string) 
 }
 
 // GetUserContacts retrieves all emergency contacts for a specific user.
-func (u *EmergencyContactUsecase) GetUserContacts(ctx context.Context, userID string) ([]Domain.EmergencyContact, error) {
-	return u.repo.GetContactsByUserID(ctx, userID)
+func (u *EmergencyContactUsecase) GetUserContacts(ctx context.Context) ([]Domain.EmergencyContact, error) {
+	return u.repo.GetAllContacts(ctx)
 }

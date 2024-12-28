@@ -31,7 +31,7 @@ func SetupRoutes(router *gin.Engine, db *mongo.Database) {
 		emergencyContactRoutes.GET("/:id", emergencyContactController.GetContactByID)
 		emergencyContactRoutes.PUT("/:id", emergencyContactController.UpdateContact)
 		emergencyContactRoutes.DELETE("/:id", emergencyContactController.DeleteContact)
-		emergencyContactRoutes.GET("/user/:user_id", emergencyContactController.GetUserContacts)
+		emergencyContactRoutes.GET("/", emergencyContactController.GetUserContacts)
 	}
 
 	// Emergency Number Routes``

@@ -17,7 +17,7 @@ type EmergencyContactRepository interface {
 	GetEmergencyContactByID(ctx context.Context, id string) (*EmergencyContact, error)    // Retrieve contact by ID
 	UpdateEmergencyContact(ctx context.Context, contact EmergencyContact) error           // Update an existing contact
 	DeleteEmergencyContact(ctx context.Context, id string) error                          // Delete a contact by ID
-	GetContactsByUserID(ctx context.Context, userID string) ([]EmergencyContact, error)   // Get all contacts for a specific user
+	GetAllContacts(ctx context.Context) ([]EmergencyContact, error)                       // Get all contacts for a specific user
 }
 
 type EmergencyContactUsecaseInterface interface {

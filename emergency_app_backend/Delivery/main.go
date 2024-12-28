@@ -3,8 +3,9 @@ package main
 import (
 	routers "emergency_app_backend/Delivery/routers"
 	"log"
+	"net/http"
+	"os"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -31,16 +32,14 @@ func main() {
 	// Initialize Gin router
 	router := gin.Default()
 
-	router.Use(cors.New(cors.Config{
-        AllowAllOrigins: true,
-        AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-        AllowHeaders:    []string{"Origin", "Content-Type", "Authorization"},
-    }))
-
-
 	// Set up routes
 	routers.SetupRoutes(router, db)
 
 	// Start the server
-	router.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default to 8080 if no port is set
+	}
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }

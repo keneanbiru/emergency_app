@@ -80,8 +80,8 @@ func (ctrl *EmergencyContactController) DeleteContact(c *gin.Context) {
 
 // GetUserContacts handles the GET request to retrieve all emergency contacts for a user.
 func (ctrl *EmergencyContactController) GetUserContacts(c *gin.Context) {
-	userID := c.Param("user_id")
-	contacts, err := ctrl.usecase.GetUserContacts(c, userID)
+	// userID := c.Param("user_id")
+	contacts, err := ctrl.usecase.GetUserContacts(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
