@@ -23,6 +23,10 @@ func NewEmergencyContactRepo(collection *mongo.Collection) *EmergencyContactRepo
 var _ Domain.EmergencyContactRepository = &EmergencyContactRepo{}
 
 func (repo *EmergencyContactRepo) CreateEmergencyContact(ctx context.Context, contact Domain.EmergencyContact) (string, error) {
+	// Generate a new ObjectID for the contact
+	contact.ID = primitive.NewObjectID()
+
+	// Insert the contact into the collection
 	result, err := repo.collection.InsertOne(ctx, contact)
 	if err != nil {
 		return "", err
@@ -39,6 +43,7 @@ func (repo *EmergencyContactRepo) CreateEmergencyContact(ctx context.Context, co
 
 func (repo *EmergencyContactRepo) GetEmergencyContactByID(ctx context.Context, id string) (*Domain.EmergencyContact, error) {
 	// Convert string ID to ObjectID
+	print(id)
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("invalid ID format: %v", err)
@@ -59,10 +64,10 @@ func (repo *EmergencyContactRepo) GetEmergencyContactByID(ctx context.Context, i
 
 func (repo *EmergencyContactRepo) UpdateEmergencyContact(ctx context.Context, contact Domain.EmergencyContact) error {
 	// Convert the contact ID to ObjectID
-	objectID, err := primitive.ObjectIDFromHex(contact.ID)
-	if err != nil {
-		return fmt.Errorf("invalid ID format: %v", err)
-	}
+	objectID := contact.ID
+	// if err != nil {
+	// 	return fmt.Errorf("invalid ID format: %v", err)
+	// }
 
 	// Create the filter and update query
 	filter := bson.M{"_id": objectID}

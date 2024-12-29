@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // EmergencyContactController handles the HTTP requests related to emergency contacts.
@@ -51,7 +52,8 @@ func (ctrl *EmergencyContactController) GetContactByID(c *gin.Context) {
 
 // UpdateContact handles the PUT request to update an emergency contact.
 func (ctrl *EmergencyContactController) UpdateContact(c *gin.Context) {
-	id := c.Param("id")
+	id, _ := primitive.ObjectIDFromHex(c.Param("id"))
+
 	var contact Domain.EmergencyContact
 	if err := c.ShouldBindJSON(&contact); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

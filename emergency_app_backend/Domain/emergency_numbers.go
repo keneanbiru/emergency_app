@@ -1,12 +1,16 @@
 package Domain
 
-import "context"
+import (
+	"context"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type EmergencyNumber struct {
-	ID          string `json:"id"`          // Unique identifier
-	Country     string `json:"country"`     // Country name
-	Number      string `json:"number"`      // Emergency number
-	Description string `json:"description"` // Description (e.g., police, ambulance)
+	ID          primitive.ObjectID `bson:"_id" json:"_id"` // Unique identifier
+	Country     string             `json:"country"`        // Country name
+	Number      string             `json:"number"`         // Emergency number
+	Description string             `json:"description"`    // Description (e.g., police, ambulance)
 }
 
 type EmergencyNumberRepository interface {
