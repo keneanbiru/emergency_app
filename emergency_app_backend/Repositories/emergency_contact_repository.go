@@ -23,6 +23,16 @@ func NewEmergencyContactRepo(collection *mongo.Collection) *EmergencyContactRepo
 var _ Domain.EmergencyContactRepository = &EmergencyContactRepo{}
 
 func (repo *EmergencyContactRepo) CreateEmergencyContact(ctx context.Context, contact Domain.EmergencyContact) (string, error) {
+	// Check if the phone number already exists in the database
+	existingContact := repo.collection.FindOne(ctx, bson.M{"number": contact.Phone})
+	if existingContact.Err() == nil {
+		// Phone number already exists
+		return "", fmt.Errorf("phone number already exists")
+	} else if existingContact.Err() != mongo.ErrNoDocuments {
+		// Some other error occurred while querying
+		return "", fmt.Errorf("failed to check existing phone number: %v", existingContact.Err())
+	}
+
 	// Generate a new ObjectID for the contact
 	contact.ID = primitive.NewObjectID()
 
